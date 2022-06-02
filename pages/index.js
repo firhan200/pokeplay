@@ -1,65 +1,72 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from 'react';
+import { useRouter } from 'next/router'
+import Layout from "../components/Layout";
+import { addNewUser } from "./../redux/user/userSlice"
+import { useDispatch } from 'react-redux'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Home = () => {
+	const router = useRouter();
+	const dispatch = useDispatch();
+	const [name, setName] = useState('');
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	const play = e => {
+		e.preventDefault();
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+		dispatch(addNewUser({
+			name: name
+		}));
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+		//redirect to my pokemon
+		router.push('/my-pokemon');
+	}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+	return (
+		<Layout>
+			<div className="container" style={{
+				height: "100vh",
+			}}>
+				<div className="row justify-content-center align-items-center h-100">
+					<div className="col-sm-12 col-md-10 col-lg-8">
+						<div style={{
+							backgroundColor: "#fff",
+							boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+						}}>
+							<div className="row">
+								<div className="col-sm-12 col-md-6 p-5 text-center" style={{
+									background: "linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.6)),url(https://images.unsplash.com/photo-1637158881671-f6e4331887e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80) no-repeat center center",
+									borderTopLeftRadius: "10px",
+									borderBottomLeftRadius: "10px",
+									color: '#fff'
+								}}>
+									<h1>Pokeplay</h1>
+									<h4>Gotta Catch 'Em All!</h4>
+									<p>Discover all Pokemon and catch it as many as you can.</p>
+								</div>
+								<div className="col-sm-12 col-md-6 p-5" style={{
+									backgroundColor: "#fff",
+									borderTopRightRadius: "10px",
+									borderBottomRightRadius: "10px",
+								}}>
+									<div className="mt-2">
+										<p>Please enter your name before you can play <b>Pokeplay</b>.</p>
+										<form onSubmit={play}>
+											<div className='mt-3'>
+												<label>Name</label>
+												<input type="text" value={name} onChange={e => setName(e.target.value)} maxLength={50} placeholder="Please enter your name.." required={true} className="form-control"/>
+											</div>
+											<div className='mt-3'>
+												<button type="submit" className="btn btn-warning w-100">Play Now!</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Layout>
+	)
 }
+
+export default Home;
