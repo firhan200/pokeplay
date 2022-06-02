@@ -125,7 +125,7 @@ const Pokemons = () => {
                                         ))
                                     }
 
-                                    <button type="button" onClick={() => loadMore()} className="btn btn-warning">Load More</button>
+                                    <button type="button" onClick={() => loadMore()} className="btn btn-warning mt-4">Load More</button>
                                 </div>
                             : null
                         }

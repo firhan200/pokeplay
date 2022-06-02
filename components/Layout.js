@@ -20,12 +20,14 @@ const Layout = ({
 
 
     useEffect(() => {
+        console.log(isPublic);
         if(!isPublic){
-            if(user.name === ''){
+            console.log(user);
+            if(user.name === null){
                 router.push('/');
             }
         }else{
-            if(user.name !== ''){
+            if(user.name !== null){
                 router.push('/my-pokemon');
             }
         }
