@@ -29,11 +29,18 @@ export const userSlice = createSlice({
 
 			//save to localstorage
 			localStorage.setItem(config.LOCAL_KEY, JSON.stringify(state));
+		},
+		removePokemon: (state, action) => {
+			const id = action.payload;
+			state.pokemon = state.pokemon.filter(pokemonId => pokemonId !== id);
+
+			//save to localstorage
+			localStorage.setItem(config.LOCAL_KEY, JSON.stringify(state));
 		}
 	},
 })
 
 // Action creators are generated for each case reducer function
-export const { init, addNewUser, addNewPokemon } = userSlice.actions
+export const { init, addNewUser, addNewPokemon, removePokemon } = userSlice.actions
 
 export default userSlice.reducer

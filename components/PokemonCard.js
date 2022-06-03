@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { removePokemon } from './../redux/user/userSlice';
 import Loading from "./Loading";
 
 const PokemonCard = ({
     id
 }) => {
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(true);
     const [pokemon, setPokemon] = useState(null);
 
@@ -22,6 +26,15 @@ const PokemonCard = ({
         getPokemonDetail(id);
     }, [id]);
 
+    const releasePokemon = () => {
+        //show confirm
+        const confirm = window.confirm("Are you sure you want to release "+pokemon.data.name+"?");
+        if(confirm){
+            //release pokemon
+            dispatch(removePokemon(id));
+        }
+    }
+
     return (
         <div>
             {
@@ -33,6 +46,8 @@ const PokemonCard = ({
                             textTransform: 'capitalize',
                             textAlign: 'center'
                         }}>{ pokemon !== null ? pokemon.data.name : null }</div>
+
+                        <button type="button" onClick={() => releasePokemon()} className="btn btn-warning btn-sm w-100 mt-2">Release</button>
                     </>
                 )
             }
